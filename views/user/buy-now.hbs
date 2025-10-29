@@ -1,0 +1,127 @@
+<body>
+  <style>
+    body {
+      background: #f8f9fa;
+      font-family: 'Poppins', sans-serif;
+    }
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .card-img-top {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 25px;
+    }
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .card-text {
+      font-size: 0.95rem;
+      color: #6c757d;
+    }
+    .fw-bold {
+      font-weight: 600;
+    }
+    #total {
+      font-size: 1.25rem;
+    }
+    #quantity {
+      max-width: 100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    button.btn-success {
+      font-size: 1rem;
+      padding: 10px 0;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    button.btn-success:hover {
+      background-color: #28a745cc;
+      transform: translateY(-2px);
+    }
+    .container {
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .mb-3 {
+      margin-bottom: 1rem;
+    }
+  </style>
+
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center">Buy Now</h2>
+
+    {{#if product}}
+    <div class="card mx-auto" style="max-width: 500px;">
+      <!-- Product Image with Fallback -->
+      <img 
+        src="{{#if product.resizedImages.[0]}}/rimage/{{product.resizedImages.[0]}}{{else}}/placeholder.png{{/if}}" 
+        class="card-img-top" 
+        alt="{{product.name}}"
+      >
+
+      <div class="card-body text-center">
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">{{product.description}}</p>
+        <div class="fw-bold text-success mb-3">
+          Price: ₹ <span id="price">{{product.price}}</span>
+        </div>
+
+        <div class="fw-bold text-primary mb-3">
+          Total: ₹ <span id="total">{{product.price}}</span>
+        </div>
+
+        <!-- Buy Now Form -->
+        <form action="/user/buy-now/{{product._id}}" method="POST">
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              id="quantity" 
+              name="quantity" 
+              value="1" 
+              min="1" 
+              required
+            >
+          </div>
+
+          <form action="/user/buy-now/{{product._id}}/payment" method="GET">
+            <button type="submit" class="btn btn-success w-100">
+              <i class="fa-solid fa-bolt me-1"></i> Buy Now
+            </button>
+          </form>
+
+
+        </form>
+      </div>
+    </div>
+
+    {{else}}
+      <p class="text-center text-danger">Product not found.</p>
+    {{/if}}
+  </div>
+
+  <!-- Script to update total based on quantity -->
+  <script>
+    const quantityInput = document.getElementById('quantity');
+    const priceSpan = document.getElementById('price');
+    const totalSpan = document.getElementById('total');
+
+    quantityInput.addEventListener('input', () => {
+      const qty = parseInt(quantityInput.value) || 1;
+      const price = parseFloat(priceSpan.textContent);
+      totalSpan.textContent = (qty * price).toFixed(2);
+    });
+  </script>
+</body>

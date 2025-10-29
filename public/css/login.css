@@ -1,0 +1,248 @@
+/* ------------------------------------------------------
+   Auth Page (Login + Signup)
+   Clean modern gradient UI with animations
+------------------------------------------------------- */
+
+:root {
+  --bg-1: #74ebd5;
+  --bg-2: #acb6e5;
+  --primary: #1976d2;
+  --success: #4caf50;
+  --danger: #e53935;
+  --muted: #6b7280;
+  --card-bg: #ffffff;
+  --transition: all 0.4s ease;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* ------------------------------------------------------
+   Auth Card
+------------------------------------------------------- */
+.auth-container {
+  width: 400px;
+  max-width: 95%;
+  background: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  padding: 26px;
+  transition: var(--transition);
+}
+
+.auth-container form {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  transition: var(--transition);
+}
+
+/* Slide Animation States */
+#loginForm {
+  transform: translateX(0);
+  opacity: 1;
+  z-index: 2;
+}
+#signupForm {
+  transform: translateX(100%);
+  opacity: 0;
+  z-index: 1;
+}
+
+.auth-container.signup-mode #loginForm {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.auth-container.signup-mode #signupForm {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* ------------------------------------------------------
+   Form Elements
+------------------------------------------------------- */
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.form-control {
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border: 1px solid #e6e9ee;
+  font-size: 0.95rem;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(25, 118, 210, 0.15);
+  outline: none;
+}
+
+/* Password field container */
+.password-container {
+  position: relative;
+}
+
+/* Eye toggle icon */
+.toggle-pass {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+.toggle-pass:hover {
+  color: var(--primary);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Buttons */
+button.btn {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 12px;
+  width: 100%;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+.btn-primary:hover {
+  background: #1258a7;
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background: var(--success);
+  color: white;
+  border: none;
+}
+.btn-success:hover {
+  background: #3d8b40;
+  transform: translateY(-1px);
+}
+
+/* Switch link */
+.switch-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.95rem;
+}
+.switch-link button {
+  border: none;
+  background: none;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.switch-link button:hover {
+  color: var(--success);
+}
+
+/* ------------------------------------------------------
+   Password Strength Bar
+------------------------------------------------------- */
+.password-strength {
+  height: 6px;
+  background: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: -8px;
+  margin-bottom: 10px;
+}
+.strength-bar {
+  height: 100%;
+  width: 0%;
+  background: red;
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+/* ------------------------------------------------------
+   Error Messages
+------------------------------------------------------- */
+.error-msg {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin-top: -4px;
+  margin-bottom: 8px;
+  display: none;
+  animation: shake 0.35s ease;
+}
+.show {
+  display: block !important;
+}
+
+/* Shake animation for errors */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+/* ------------------------------------------------------
+   Alert messages from backend
+------------------------------------------------------- */
+.alert {
+  text-align: center;
+  padding: 10px;
+  border-radius: 0;
+  font-size: 0.9rem;
+}
+
+/* ------------------------------------------------------
+   Responsive Design
+------------------------------------------------------- */
+@media (max-width: 450px) {
+  .auth-container {
+    padding: 22px;
+  }
+  h3 {
+    font-size: 1.3rem;
+  }
+  .form-control {
+    font-size: 0.9rem;
+  }
+}

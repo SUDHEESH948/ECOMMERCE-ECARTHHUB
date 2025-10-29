@@ -1,0 +1,141 @@
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <!-- Profile Card -->
+      <div class="col-md-6">
+        <div class="card shadow-sm p-4 text-center">
+          <h2 class="mb-4">My Profile</h2>
+
+          <!-- Name -->
+          <div class="mb-3 text-start">
+            <label class="form-label fw-bold">Name:</label>
+            <p class="form-control">{{user.name}}</p>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3 text-start">
+            <label class="form-label fw-bold">Email:</label>
+            <p class="form-control">{{user.email}}</p>
+          </div>
+
+          <!-- Address -->
+          <div class="mb-3 text-start">
+            <label class="form-label fw-bold">Address:</label>
+            {{#if profile}}
+              <p class="form-control">
+                {{#if profile.address.street}}{{profile.address.street}},
+                {{/if}}
+                {{#if profile.address.city}}{{profile.address.city}}, {{/if}}
+                {{#if profile.address.state}}{{profile.address.state}}, {{/if}}
+                {{#if profile.address.zip}}{{profile.address.zip}}, {{/if}}
+                {{#if
+                  profile.address.country
+                }}{{profile.address.country}}{{/if}}
+              </p>
+            {{else}}
+              <p class="form-control text-muted">No address added</p>
+            {{/if}}
+          </div>
+
+          <div class="mb-3 text-start">
+            <label class="form-label fw-bold">Phone:</label>
+            <p class="form-control">{{#if profile}}{{profile.phone}}{{else}}Not
+                added{{/if}}</p>
+          </div>
+
+          <!-- Add/Change Address Button -->
+          <div class="mb-3 text-center">
+            <button class="btn btn-warning" id="toggleAddressForm">
+              <i class="fa-solid fa-pen me-1"></i>
+              Add / Change Address
+            </button>
+          </div>
+
+          <!-- Address Form (Hidden initially) -->
+          <div id="addressFormContainer" class="mt-3" style="display:none;">
+            <form action="/profile/edit/address" method="POST">
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    name="street"
+                    class="form-control"
+                    placeholder="Street"
+                    value="{{profile.address.street}}"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    name="city"
+                    class="form-control"
+                    placeholder="City"
+                    value="{{profile.address.city}}"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    name="state"
+                    class="form-control"
+                    placeholder="State"
+                    value="{{profile.address.state}}"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    name="zip"
+                    class="form-control"
+                    placeholder="ZIP / Postal Code"
+                    value="{{profile.address.zip}}"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    name="country"
+                    class="form-control"
+                    placeholder="Country"
+                    value="{{profile.address.country}}"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    name="phone"
+                    class="form-control"
+                    placeholder="Phone Number"
+                    value="{{profile.phone}}"
+                  />
+                </div>
+              </div>
+
+              <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success px-4 py-2">
+                  <i class="fa-solid fa-floppy-disk me-1"></i>
+                  Save Address
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Toggle Address Form Script -->
+<script>
+  document.getElementById('toggleAddressForm').addEventListener('click', () => {
+  const form = document.getElementById('addressFormContainer');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none'; });
+</script>

@@ -1,0 +1,271 @@
+<body
+  style="margin:0; padding:0; font-family: 'Montserrat', sans-serif; background:#107ce9; display:flex; justify-content:center; align-items:center; height:100vh;"
+>
+
+  <div class="auth-container">
+
+    <!-- Login Form -->
+    <form id="loginForm" action="/seller/login" method="POST">
+      <h2>Seller Login</h2>
+      {{#if loginError}}
+        <div class="login-error">{{loginError}}</div>
+      {{/if}}
+
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Email" required />
+        <i class="fa-solid fa-envelope"></i>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          id="loginPassword"
+          required
+        />
+        <i class="fa-solid fa-eye toggle-password" data-target="loginPassword"></i>
+      </div>
+
+      <div class="forgot-password">
+        <a href="/seller/forgot-password">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="btn-auth">Login</button>
+      <div class="switch-form">
+        Don't have an account?
+        <a id="showSignup">Signup</a>
+      </div>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signupForm" class="hidden" action="/seller/signup" method="POST">
+      <h2>Seller Signup</h2>
+      {{#if signupError}}
+        <div class="signup-error">{{signupError}}</div>
+      {{/if}}
+
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <i class="fa-solid fa-user"></i>
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Email" required />
+        <i class="fa-solid fa-envelope"></i>
+      </div>
+
+      <div class="form-group">
+        <input type="tel" name="contactNumber" placeholder="Contact Number" required />
+        <i class="fa-solid fa-phone"></i>
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="address" placeholder="Address" required />
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="password" placeholder="Password" id="signupPassword" required />
+        <i class="fa-solid fa-eye toggle-password" data-target="signupPassword"></i>
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="confirmPassword" placeholder="Confirm Password" id="confirmPassword" required />
+        <i class="fa-solid fa-eye toggle-password" data-target="confirmPassword"></i>
+      </div>
+
+      <button type="submit" class="btn-auth">Signup</button>
+      <div class="switch-form">
+         Already have an account?
+         <a id="showLogin">Login</a>
+      </div>
+    </form>
+
+  </div>
+
+  <style>
+    .auth-container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .auth-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    .form-group input:focus {
+      border-color: #007bff;
+    }
+    .form-group i {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #888;
+      transition: color 0.3s;
+    }
+    .form-group i:hover {
+      color: #2200ff;
+    }
+
+    .btn-auth {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn-auth:hover {
+      background: #0056b3;
+    }
+
+    .switch-form {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .switch-form a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .switch-form a:hover {
+      text-decoration: underline;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .forgot-password a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    .login-error,
+    .signup-error {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <script>
+    // --- Password Toggle ---
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const targetId = icon.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.add('fa-eye-slash');
+        } else {
+          input.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+        }
+      });
+    });
+
+    // --- Switch Forms ---
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+
+    document.getElementById('showSignup').addEventListener('click', () => {
+      loginForm.classList.add('hidden');
+      signupForm.classList.remove('hidden');
+    });
+    document.getElementById('showLogin').addEventListener('click', () => {
+      signupForm.classList.add('hidden');
+      loginForm.classList.remove('hidden');
+    });
+
+    // --- Basic Validation ---
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      const email = loginForm.email.value.trim();
+      const password = loginForm.password.value.trim();
+      if (!email || !password) {
+        e.preventDefault();
+        alert('Please fill in all fields.');
+        return;
+      }
+      if (!isValidEmail(email)) {
+        e.preventDefault();
+        alert('Enter a valid email.');
+        return;
+      }
+      if (password.length < 6) {
+        e.preventDefault();
+        alert('Password must be at least 6 characters.');
+        return;
+      }
+    });
+
+    signupForm.addEventListener('submit', (e) => {
+      const name = signupForm.name.value.trim();
+      const email = signupForm.email.value.trim();
+      const contact = signupForm.contactNumber.value.trim();
+      const address = signupForm.address.value.trim();
+      const password = signupForm.password.value.trim();
+      const confirmPassword = signupForm.confirmPassword.value.trim();
+
+      if (!name || !email || !contact || !address || !password || !confirmPassword) {
+        e.preventDefault();
+        alert('Please fill in all fields.');
+        return;
+      }
+      if (!isValidEmail(email)) {
+        e.preventDefault();
+        alert('Enter a valid email.');
+        return;
+      }
+      if (password.length < 6) {
+        e.preventDefault();
+        alert('Password must be at least 6 characters.');
+        return;
+      }
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match.');
+        return;
+      }
+    });
+  </script>
+</body>

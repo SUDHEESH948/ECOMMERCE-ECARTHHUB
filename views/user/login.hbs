@@ -1,0 +1,195 @@
+<body>
+  <div class="auth-bg">
+    <div class="container">
+      <h2>Login</h2>
+
+      {{#if error}}
+        <p class="error">{{error}}</p>
+      {{/if}}
+
+      <form id="loginForm" action="/login" method="POST" novalidate>
+        <div class="input-group">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            required
+          />
+          <i class="fa fa-envelope"></i>
+        </div>
+
+        <div class="input-group">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <i id="togglePwd" class="fa fa-eye"></i>
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
+
+      <p class="signup-link">Don't have an account?
+        <a href="/signup">Signup</a></p>
+    </div>
+  </div>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <script>
+    // Toggle password visibility
+    const password = document.getElementById('password');
+    const toggle = document.getElementById('togglePwd');
+
+    toggle.addEventListener('click', () => {
+      password.type = password.type === 'password' ? 'text' : 'password';
+      toggle.classList.toggle('fa-eye-slash');
+    });
+
+    // Client-side form validation
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      const email = document.getElementById('email').value.trim();
+      const pwd = password.value.trim();
+
+      if (!email || !pwd) {
+        alert('All fields are required!');
+        e.preventDefault();
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        alert('Enter a valid email!');
+        e.preventDefault();
+      }
+    });
+  </script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Montserrat", sans-serif;
+      background: linear-gradient(135deg, #74abe2, #5563de);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .auth-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      max-width: 90%;
+      text-align: center;
+      animation: fadeInScale 1s ease forwards;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    @keyframes fadeInScale {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #333;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #5563de;
+      box-shadow: 0 0 8px rgba(85, 99, 222, 0.3);
+      outline: none;
+    }
+
+    .input-group i {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      cursor: pointer;
+    }
+
+    .input-group i:hover {
+      color: #5563de;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #5563de, #74abe2);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .signup-link {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .signup-link a {
+      color: #5563de;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+      color: #74abe2;
+    }
+
+    .error {
+      color: red;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+  </style>
+</body>

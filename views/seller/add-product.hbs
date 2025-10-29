@@ -1,0 +1,379 @@
+<body
+  style="margin:0; padding:0; font-family: 'Montserrat', sans-serif; background:#107ce9; display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding-top:50px;"
+>
+
+<!-- Main Content Wrapper -->
+  <div class="form-container" style="background:#fff; padding:30px 40px; border-radius:12px; box-shadow:0 8px 25px rgba(0,0,0,0.1); width:100%; max-width:600px;">
+
+
+
+  <div class="form-container">
+    <h2><i class="fa-solid fa-plus"></i> Add New Product</h2>
+    <form
+      action="/seller/add-product"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+
+      <!-- Product Name -->
+      <div class="mb-3">
+        <label for="productName"><i class="fa-solid fa-tag"></i>
+          Product Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="productName"
+          name="name"
+          placeholder="Enter product name"
+          required
+        />
+      </div>
+
+      <!-- Category -->
+      <div class="mb-3">
+        <label for="productCategory"><i class="fa-solid fa-list"></i>
+          Category</label>
+        <select
+          class="form-select"
+          id="productCategory"
+          name="category"
+          required
+        >
+          <option value="" disabled selected>Select Category</option>
+
+          <optgroup label="Wall Decor">
+            <option value="wall_paintings">Wall Paintings</option>
+            <option value="wall_clocks">Wall Clocks</option>
+            <option value="wall_mirrors">Wall Mirrors</option>
+            <option value="wall_shelves">Wall Shelves</option>
+            <option value="wall_art">Metal/Canvas Wall Art</option>
+          </optgroup>
+
+          <optgroup label="Lighting">
+            <option value="table_lamps">Table Lamps</option>
+            <option value="floor_lamps">Floor Lamps</option>
+            <option value="string_lights">String / LED Lights</option>
+            <option value="lanterns">Lanterns</option>
+          </optgroup>
+
+          <optgroup label="Decorative Items">
+            <option value="vases_flowers">Vases & Artificial Flowers</option>
+            <option value="showpieces">Showpieces & Figurines</option>
+            <option value="candle_holders">Candle Holders</option>
+            <option value="photo_frames">Photo Frames</option>
+            <option value="table_accents">Table Accents</option>
+          </optgroup>
+
+          <optgroup label="Furnishing & Fabrics">
+            <option value="curtains">Curtains</option>
+            <option value="cushions">Cushions & Covers</option>
+            <option value="rugs_carpets">Rugs & Carpets</option>
+            <option value="table_runner">Table Runner / Table Mats</option>
+          </optgroup>
+
+          <optgroup label="Indoor Plants & Garden Decor">
+            <option value="planters">Planters</option>
+            <option value="artificial_plants">Artificial Plants</option>
+            <option value="bonsai">Bonsai Décor</option>
+          </optgroup>
+
+          <optgroup label="Spiritual & Aroma">
+            <option value="buddha_idols">Buddha Idols</option>
+            <option value="dream_catchers">Dream Catchers</option>
+            <option value="aroma_diffusers">Aroma Diffusers</option>
+          </optgroup>
+        </select>
+
+        <!-- Inline Add New Category -->
+        <input
+          type="text"
+          id="newCategoryInput"
+          class="form-control mt-2"
+          placeholder="Add new category"
+          style="display:none;"
+        />
+        <button
+          type="button"
+          id="addCategoryBtn"
+          class="btn btn-sm btn-outline-primary mt-1"
+        >+ Add Category</button>
+      </div>
+
+      <!-- Subcategory -->
+      <div class="mb-3">
+        <label for="productSubcategory"><i class="fa-solid fa-list-check"></i>
+          Subcategory</label>
+        <select
+          class="form-select"
+          id="productSubcategory"
+          name="subcategory"
+          required
+        >
+          <option value="" disabled selected>Select Subcategory</option>
+        </select>
+
+        <!-- Inline Add New Subcategory -->
+        <input
+          type="text"
+          id="newSubcategoryInput"
+          class="form-control mt-2"
+          placeholder="Add new subcategory"
+          style="display:none;"
+        />
+        <button
+          type="button"
+          id="addSubcategoryBtn"
+          class="btn btn-sm btn-outline-primary mt-1"
+        >+ Add Subcategory</button>
+      </div>
+      <!-- Brand -->
+    <div class="mb-3">
+      <label for="productBrand"><i class="fa-solid fa-copyright"></i> Brand</label>
+      <select class="form-select" id="productBrand" name="brand" required>
+        <option value="" disabled selected>Select Brand</option>
+
+        {{#each brands}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+
+      <!-- Inline Add New Brand -->
+      <input
+        type="text"
+        id="newBrandInput"
+        class="form-control mt-2"
+        placeholder="Add new brand"
+        style="display:none;"
+      />
+      <button
+        type="button"
+        id="addBrandBtn"
+        class="btn btn-sm btn-outline-primary mt-1"
+      >+ Add Brand</button>
+    </div>
+
+
+      <!-- Price -->
+      <div class="mb-3">
+        <label for="productPrice"><i class="fa-solid fa-dollar-sign"></i>
+          Price</label>
+        <input
+          type="number"
+          class="form-control"
+          id="productPrice"
+          name="price"
+          placeholder="Enter price"
+          required
+        />
+      </div>
+
+      <!-- Stock -->
+      <div class="mb-3">
+        <label for="productStock"><i class="fa-solid fa-boxes-stacked"></i>
+          Stock Quantity</label>
+        <input
+          type="number"
+          class="form-control"
+          id="productStock"
+          name="stock"
+          placeholder="Enter stock quantity"
+          required
+        />
+      </div>
+
+      <!-- Image -->
+      <div class="mb-3">
+        <label for="productImages"><i class="fa-solid fa-image"></i>
+          Product Images</label>
+        <input
+          type="file"
+          class="form-control"
+          id="productImages"
+          name="images"
+          accept="image/*"
+          multiple
+          required
+        />
+        <div id="imagePreviewContainer" style="margin-top:10px;"></div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="productDescription"><i class="fa-solid fa-align-left"></i>
+          Description</label>
+        <textarea
+          class="form-control"
+          id="productDescription"
+          name="description"
+          rows="4"
+          placeholder="Enter product description"
+          required
+        ></textarea>
+      </div>
+
+      {{#if message}}
+          <div class="alert alert-{{message.type}} alert-dismissible fade show" role="alert">
+            {{message.content}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      {{/if}}
+       <button type="submit" class="btn btn-success" style="flex:1;">
+    <i class="fa-solid fa-check"></i> Add Product
+  </button
+
+    </form>
+  </div>
+
+</div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Your Custom JS -->
+<script>
+  // ================== Live Image Preview ==================
+  const productImages = document.getElementById('productImages');
+  const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+
+  productImages.addEventListener('change', function () {
+    imagePreviewContainer.innerHTML = '';
+    const files = this.files;
+    if (files) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.style.maxWidth = '100px';
+          img.style.marginRight = '10px';
+          img.style.marginBottom = '10px';
+          img.style.borderRadius = '8px';
+          imagePreviewContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  });
+
+  // ================== Category & Subcategory ==================
+  const categorySelect = document.getElementById('productCategory');
+  const subcategorySelect = document.getElementById('productSubcategory');
+  const addCategoryBtn = document.getElementById('addCategoryBtn');
+  const newCategoryInput = document.getElementById('newCategoryInput');
+  const addSubcategoryBtn = document.getElementById('addSubcategoryBtn');
+  const newSubcategoryInput = document.getElementById('newSubcategoryInput');
+
+  const subcategoriesMap = {
+    wall_paintings: ["Canvas Painting", "Abstract Art", "Nature Painting"],
+    wall_clocks: ["Vintage Clock", "Wooden Clock", "Modern Clock"],
+    wall_mirrors: ["Round Mirror", "LED Mirror", "Decorative Mirror"],
+    wall_shelves: ["Corner Shelf", "Floating Shelf", "Wall Rack"],
+    wall_art: ["Metal Art", "Canvas Prints"],
+    table_lamps: ["Bedside Lamp", "Modern Lamp", "Wooden Lamp"],
+    floor_lamps: ["Tripod Lamp", "Standing Lamp"],
+    string_lights: ["Fairy Lights", "LED Strip"],
+    lanterns: ["Hanging Lantern", "Table Lantern"],
+    vases_flowers: ["Glass Vase", "Ceramic Vase", "Artificial Flowers"],
+    showpieces: ["Figurines", "Mini Sculptures", "Animal Showpieces"],
+    candle_holders: ["Glass Candle Holder", "Metal Candle Holder"],
+    photo_frames: ["Wooden Frame", "Collage Frame", "Luxury Frame"],
+    table_accents: ["Trays", "Bowls", "Decorative Items"],
+    curtains: ["Sheer Curtains", "Blackout Curtains"],
+    cushions: ["Printed Cushions", "Plain Cushions", "Embroidery Cushions"],
+    rugs_carpets: ["Handmade Rug", "Fur Carpet", "Patterned Rug"],
+    table_runner: ["Fabric Runner", "Decorative Runner"],
+    planters: ["Indoor Planter", "Hanging Planter", "Metal Planter"],
+    artificial_plants: ["Potted Plants", "Mini Plants"],
+    bonsai: ["Bonsai Tree", "Decorative Bonsai"],
+    buddha_idols: ["Meditating Buddha", "Blessing Buddha"],
+    dream_catchers: ["Small Dream Catcher", "Large Dream Catcher"],
+    aroma_diffusers: ["Electric Diffuser", "Wooden Diffuser"]
+  };
+
+  function loadSubcategories(selectedCat, selectValue = "") {
+    subcategorySelect.innerHTML = '<option value="" disabled selected>Select Subcategory</option>';
+    if (subcategoriesMap[selectedCat]) {
+      subcategoriesMap[selectedCat].forEach(sub => {
+        const opt = document.createElement('option');
+        opt.value = sub.toLowerCase().replace(/\s+/g, '-');
+        opt.textContent = sub;
+        subcategorySelect.appendChild(opt);
+      });
+      if (selectValue) subcategorySelect.value = selectValue;
+    }
+  }
+
+  categorySelect.addEventListener('change', function () {
+    loadSubcategories(this.value);
+  });
+
+  addCategoryBtn.addEventListener('click', () => {
+    newCategoryInput.style.display = 'block';
+    newCategoryInput.focus();
+  });
+
+  newCategoryInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newCat = newCategoryInput.value.trim();
+      if (!newCat) return;
+      if (!subcategoriesMap[newCat]) subcategoriesMap[newCat] = [];
+      const option = document.createElement('option');
+      option.value = newCat.toLowerCase().replace(/\s+/g,'_');
+      option.textContent = newCat;
+      categorySelect.appendChild(option);
+      categorySelect.value = option.value;
+      newCategoryInput.value = '';
+      newCategoryInput.style.display = 'none';
+      loadSubcategories(option.value);
+    }
+  });
+
+  addSubcategoryBtn.addEventListener('click', () => {
+    if (!categorySelect.value) return alert('Select a category first');
+    newSubcategoryInput.style.display = 'block';
+    newSubcategoryInput.focus();
+  });
+
+  newSubcategoryInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newSub = newSubcategoryInput.value.trim();
+      const selectedCat = categorySelect.value;
+      if (!newSub || !selectedCat) return alert('Select a category first');
+      if (!subcategoriesMap[selectedCat]) subcategoriesMap[selectedCat] = [];
+      subcategoriesMap[selectedCat].push(newSub);
+
+      const newValue = newSub.toLowerCase().replace(/\s+/g, '-');
+      loadSubcategories(selectedCat, newValue);
+      newSubcategoryInput.value = '';
+      newSubcategoryInput.style.display = 'none';
+    }
+  });
+
+  // ================== BRAND SECTION ==================
+  const brandSelect = document.getElementById('productBrand');
+  const addBrandBtn = document.getElementById('addBrandBtn');
+  const newBrandInput = document.getElementById('newBrandInput');
+
+  addBrandBtn.addEventListener('click', () => {
+    newBrandInput.style.display = 'block';
+    newBrandInput.focus();
+  });
+
+  newBrandInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newBrand = newBrandInput.value.trim();
+      if (!newBrand) return;
+
+      const option = document.createElement('option');
+      option.value = newBrand;
+      option.textContent = newBrand;
+      brandSelect.appendChild(option);
+
+      brandSelect.value = newBrand;
+      newBrandInput.value = '';
+      newBrandInput.style.display = 'none';
+    }
+  });
+</script>

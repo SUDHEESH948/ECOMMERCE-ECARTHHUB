@@ -1,0 +1,112 @@
+<div class="container py-5">
+  <h2 class="mb-4 text-center">Search Products 🔍</h2>
+
+  <!-- Search Input -->
+  <div class="mb-4 d-flex justify-content-center">
+    <input type="text" id="searchInput" class="form-control w-50" placeholder="Enter product name..." value="{{query}}">
+  </div>
+
+  <!-- Products Grid -->
+  <div id="productsContainer" class="row g-4">
+    {{#if products.length}}
+      {{#each products}}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm h-100">
+
+          <!-- Product Image -->
+          <img 
+            src="{{#if this.resizedImages.[0]}}/rimage/{{this.resizedImages.[0]}}{{else}}/placeholder.png{{/if}}" 
+            class="card-img-top" 
+            alt="{{this.name}}">
+
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{this.name}}</h5>
+            <p class="card-text text-muted flex-grow-1">{{this.description}}</p>
+            <p class="card-text fw-bold text-success">Price: ${{this.price}}</p>
+
+            <div class="mt-auto d-flex gap-2">
+              <form action="/cart/add/{{this._id}}" method="POST" class="w-50">
+                <button type="submit" class="btn btn-primary btn-sm w-100">
+                  <i class="fa-solid fa-cart-plus me-1"></i> Add to Cart
+                </button>
+              </form>
+              <form action="/buy-now/{{this._id}}" method="GET" class="w-50">
+                <button type="submit" class="btn btn-success btn-sm w-100">
+                  <i class="fa-solid fa-bolt me-1"></i> Buy Now
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {{/each}}
+    {{else}}
+      <p class="text-muted text-center mt-4">No products found.</p>
+    {{/if}}
+  </div>
+</div>
+
+<style>
+  .card-img-top { height: 180px; object-fit: cover; }
+  .card-body { display: flex; flex-direction: column; }
+  .btn-sm i { vertical-align: middle; }
+</style>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const productsContainer = document.getElementById('productsContainer');
+
+  searchInput.addEventListener('input', async () => {
+    const query = searchInput.value.trim();
+
+    if (!query) {
+      productsContainer.innerHTML = '<p class="text-muted text-center mt-4">Type to search products.</p>';
+      return;
+    }
+
+    try {
+      const res = await fetch('/search/ajax', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+      });
+
+      const products = await res.json();
+
+      if (products.length === 0) {
+        productsContainer.innerHTML = `<p class="text-muted text-center mt-4">No products found for "${query}".</p>`;
+        return;
+      }
+
+      productsContainer.innerHTML = products.map(p => `
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="card shadow-sm h-100">
+            <img src="${p.resizedImages[0] ? '/rimage/' + p.resizedImages[0] : '/placeholder.png'}" class="card-img-top" alt="${p.name}">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">${p.name}</h5>
+              <p class="card-text text-muted flex-grow-1">${p.description}</p>
+              <p class="card-text fw-bold text-success">Price: $${p.price}</p>
+              <div class="mt-auto d-flex gap-2">
+                <form action="/cart/add/${p._id}" method="POST" class="w-50">
+                  <button type="submit" class="btn btn-primary btn-sm w-100">
+                    <i class="fa-solid fa-cart-plus me-1"></i> Add to Cart
+                  </button>
+                </form>
+                <form action="/buy-now/${p._id}" method="GET" class="w-50">
+                  <button type="submit" class="btn btn-success btn-sm w-100">
+                    <i class="fa-solid fa-bolt me-1"></i> Buy Now
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+    } catch (err) {
+      console.error(err);
+      productsContainer.innerHTML = '<p class="text-danger text-center mt-4">Error fetching products.</p>';
+    }
+  });
+</script>
